@@ -15,7 +15,7 @@ export class NavComponent implements OnInit {
   faPenAlt = faPenAlt;
   faBell = faBell;
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

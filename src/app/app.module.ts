@@ -3,18 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [	
-    AppComponent,
-      NavComponent
+    AppComponent
    ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
