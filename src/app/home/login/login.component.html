@@ -9,11 +9,23 @@
         <a class="facebook"><fa-icon [icon]="faFacebook"></fa-icon>&nbsp;<span>Facebook</span></a>
         <a class="google"><fa-icon [icon]="faGoogle"></fa-icon>&nbsp;<span>Google</span></a>
       </div>
+      <div *ngIf="errors.length > 0" class="alert alert-warning" role="alert">
+        <p *ngFor="let error of errors">{{error}}</p>
+      </div>
       <div class="form-group">
-        <input type="email" id="email" name="name" formControlName="email" class="form-control" placeholder="Email adresiniz" autofocus>
+        <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Email adresiniz" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+        <span *ngIf="loginUserForm.get('email').hasError('required') && loginUserForm.get('email').touched" class="form-text text-muted">
+          Giriş için e-mail adresinizi giriniz.
+        </span>
+        <span *ngIf="loginUserForm.get('email').hasError('pattern') && loginUserForm.get('email').dirty" class="form-text text-muted">
+          E-mail adresiniz example@examle.com formatında olmalıdır.
+        </span>
       </div>
       <div class="form-group">
         <input type="password" id="password" name="password" formControlName="password" class="form-control" placeholder="Şifreniz">
+        <span *ngIf="loginUserForm.get('password').hasError('required') && loginUserForm.get('password').touched" class="form-text text-muted">
+          Giriş için şifrenizi giriniz.
+        </span>
       </div>
       <div class="form-group">
         <div class="form-check">

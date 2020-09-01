@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   faGoogle = faGoogle;
   loginUserForm: FormGroup;
   loginUser:LoginUser;
+  errors:string[] = [];
 
   ngOnInit() {
     this.createLoginForm();
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   createLoginForm(){
     this.loginUserForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email, Validators.pattern]],
       password: ['', Validators.required]
     });
   }
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit {
     if(this.loginUserForm.valid){
       this.loginUser = Object.assign({}, this.loginUserForm.value);
       this.userService.login(this.loginUser);
+      this.errors = this.userService.getErrorMessages();
     }
   }
 

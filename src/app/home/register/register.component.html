@@ -1,3 +1,91 @@
-<p>
-  register works!
-</p>
+<div class="main-login-bg">
+  <div class="main-login">
+    <form [formGroup]="registerUserForm" (ngSubmit)="register()">
+      <div class="form-group text-center">
+        <h3>Üye Kaydı Oluştur</h3>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">İsim</label>
+            <input type="text" id="name" name="name" formControlName="name" class="form-control" placeholder="İsminiz">
+            <span *ngIf="registerUserForm.get('name').hasError('required') && registerUserForm.get('name').touched" class="form-text text-muted">
+              Kayıt için isminizi giriniz
+            </span>
+            <span *ngIf="registerUserForm.get('name').hasError('minlength') && registerUserForm.get('name').dirty" class="form-text text-muted">
+              İsminiz en az 3 karakterli olmalıdır
+            </span>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label for="city">Şehir</label>
+              <select id="city" name="city" formControlName="city" class="form-control">
+                <option selected hidden>Şehir seçiniz...</option>
+                <option *ngFor="let city of cities">{{city}}</option>
+              </select>
+              <span *ngIf="registerUserForm.get('city').hasError('required') && registerUserForm.get('city').touched" class="form-text text-muted">
+                Kayıt için bir şehir seçiniz
+              </span>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="gender">Cinsiyet</label>
+              <select id="gender" name="gender" formControlName="gender" class="form-control">
+                <option selected value="" hidden>Cinsiyet seçiniz...</option>
+                <option>Erkek</option>
+                <option>Kadın</option>
+              </select>
+              <span *ngIf="registerUserForm.get('gender').hasError('required') && registerUserForm.get('gender').touched" class="form-text text-muted">
+                Kayıt için cinsiyetinizi seçiniz
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="birthDay">Doğum tarihi</label>
+            <input type="date" id="birthDay" name="birthDay" formControlName="birthDay" class="form-control">
+            <span *ngIf="registerUserForm.get('birthDay').hasError('required') && registerUserForm.get('birthDay').touched" class="form-text text-muted">
+              Kayıt için doğum günü tarihini giriniz
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">E-mail adresi</label>
+            <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Email adresiniz" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+            <span *ngIf="registerUserForm.get('email').hasError('required') && registerUserForm.get('email').touched" class="form-text text-muted">
+              Kayıt için e-mail adresinizi giriniz
+            </span>
+            <span *ngIf="registerUserForm.get('email').hasError('pattern') && registerUserForm.get('email').dirty" class="form-text text-muted">
+              E-mail adresiniz example@examle.com formatında olmalıdır
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="password">Şifreniz</label>
+            <input type="password" id="password" name="password" formControlName="password" class="form-control" placeholder="Şifreniz" pattern="(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}">
+            <span *ngIf="registerUserForm.get('password').hasError('required') && registerUserForm.get('password').touched" class="form-text text-muted">
+              Kayıt için şifre giriniz
+            </span>
+            <span *ngIf="registerUserForm.get('password').hasError('pattern') && registerUserForm.get('password').dirty" class="form-text text-muted">
+              Şifrenizde: <br>
+              * En az bir büyük harf (A-Z) <br>
+              * En az bir küçük harf (a-z) <br>
+              * En az bir rakam (0-9) <br>
+              * En az bir özel karakter (#?!@$%^&*-.) <br>
+              * En az 8 karakter (Examle123+)'den oluşmalıdır <br>
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Şifre doğrulama</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" class="form-control" placeholder="Şifrenizi tekrar giriniz">
+            <span *ngIf="registerUserForm.get('confirmPassword').hasError('required') && registerUserForm.get('confirmPassword').touched" class="form-text text-muted">
+              Kayıt için şifreyi tekrar giriniz
+            </span>
+            <span *ngIf="registerUserForm.hasError('misMatch') && registerUserForm.get('confirmPassword').dirty && registerUserForm.get('confirmPassword').value != ''" class="form-text text-muted">
+              Şifreniz ile şifre onayınız eşleşmiyor
+            </span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-md btn-primary btn-block" [disabled]="!registerUserForm.valid">Kaydol</button>
+    </form>
+  </div>
+</div>
