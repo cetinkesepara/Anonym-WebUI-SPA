@@ -6,32 +6,32 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#"><fa-icon [icon]="faHome"></fa-icon>&nbsp;<span class="linkText">Anasayfa</span></a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><fa-icon [icon]="faHome"></fa-icon>&nbsp;<span class="linkText">Anasayfa</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><fa-icon [icon]="faPenAlt"></fa-icon>&nbsp;<span class="linkText">Yazılarım</span></a>
+          <a class="nav-link" routerLink="yazılarım" routerLinkActive="active"><fa-icon [icon]="faPenAlt"></fa-icon>&nbsp;<span class="linkText">Yazılarım</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><fa-icon [icon]="faBell"></fa-icon>&nbsp;<span class="linkText">Bildirimler</span>&nbsp;<span class="notificationCount">0</span></a>
+          <a class="nav-link" routerLink="bildirimler" routerLinkActive="active"><fa-icon [icon]="faBell"></fa-icon>&nbsp;<span class="linkText">Bildirimler</span>&nbsp;<span class="notificationCount">0</span></a>
         </li>
       </ul>
     </div>
   
-    <div class="userProfile">
+    <div *ngIf="isAuthenticated" class="userProfile">
       <a class="dropdown-toggle" href="#" id="navbarUserProfile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <fa-icon [icon]="faUser"></fa-icon> <span>Hesabım</span> 
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarUserProfile">
-        <a class="dropdown-item" href="#">Profil</a>
-        <a class="dropdown-item" href="#">Ayarlar</a>
+        <a class="dropdown-item">Profil</a>
+        <a class="dropdown-item">Ayarlar</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Çıkış Yap</a>
+        <a class="dropdown-item" (click)="logOut()">Çıkış Yap</a>
       </div>
     </div>
   
-    <div class="registerLogin">
-      <a href="#">Giriş Yap</a> &nbsp;
-      <a href="#">Kaydol</a>
+    <div *ngIf="!isAuthenticated" class="registerLogin">
+      <a routerLink="girisyap" routerLinkActive="active">Giriş Yap</a> &nbsp;
+      <a routerLink="kaydol" routerLinkActive="active">Kaydol</a>
     </div>
   </nav>

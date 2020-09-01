@@ -1,0 +1,31 @@
+<div class="main-login-bg">
+  <div class="main-login">
+
+    <form [formGroup]="loginUserForm" (ngSubmit)="login()">
+      <div class="form-group text-center">
+        <h3>Giriş Yap</h3>
+      </div>
+      <div class="externalLogins">
+        <a class="facebook"><fa-icon [icon]="faFacebook"></fa-icon>&nbsp;<span>Facebook</span></a>
+        <a class="google"><fa-icon [icon]="faGoogle"></fa-icon>&nbsp;<span>Google</span></a>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" name="name" formControlName="email" class="form-control" placeholder="Email adresiniz" autofocus>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" name="password" formControlName="password" class="form-control" placeholder="Şifreniz">
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+          <label class="form-check-label" for="rememberme">Beni hatırla</label>
+          &nbsp;|&nbsp;
+          <a>Şifrenizi mi unuttunuz?</a>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-md btn-primary btn-block">Oturumu Aç</button>
+   
+    </form>
+  </div>
+</div>
