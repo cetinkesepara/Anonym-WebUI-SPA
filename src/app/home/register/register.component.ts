@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
       city: ['', Validators.required],
       birthDay: ['', [Validators.required]],
       gender: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email, Validators.pattern]],
+      email: ['', [Validators.required, Validators.pattern]],
       password: [
         '',
         [Validators.required, Validators.pattern],
@@ -56,7 +56,11 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    
+    if(this.registerUserForm.valid){
+      this.registerUser = Object.assign({}, this.registerUserForm.value);
+      this.userService.register(this.registerUser);
+      this.errors = this.userService.getErrorMessages();
+    }
   }
 
   get isAuthenticated() {

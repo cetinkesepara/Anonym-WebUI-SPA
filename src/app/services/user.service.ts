@@ -6,10 +6,11 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { AlertifyService } from './alertify.service';
 
 @Injectable()
 export class UserService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router, private alertifyService:AlertifyService) {}
 
   TOKEN_KEY = 'token';
   path = 'https://localhost:44324/api/users/';
@@ -20,6 +21,7 @@ export class UserService {
 
   login(loginUser: LoginUser) {
     this.errorMessages = [];
+
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
 
@@ -37,32 +39,39 @@ export class UserService {
         })
       )
       .subscribe((data) => {
-        this.saveToken(data);
-        this.userToken = data;
+        let datas:any[] = JSON.parse(data);
+        let token = JSON.stringify(datas["data"]);
+        let message = datas["message"];
+
+        this.saveToken(token);
+        this.userToken = token;
 
         this.decodedToken = this.jwtHelper.decodeToken(this.token);
 
         this.router.navigateByUrl('');
+        this.alertifyService.success(message);
       });
   }
 
   register(registerUser: RegisterUser) {
     this.errorMessages = [];
+
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
 
     this.httpClient
-      .post(this.path + 'register', registerUser, { headers: headers })
+      .post(this.path + 'register', registerUser, { headers: headers, responseType: "text" })
       .pipe(
         catchError((err) => {
           if (err.status == 400) {
             this.errorMessages.push(err.error);
           }
-          return throwError(new Error('Bir hata oluştu!'));
+          //return throwError(new Error('Bir hata oluştu!'));
+          return throwError(err);
         })
       )
       .subscribe((data)=>{
-        this.router.navigateByUrl('girisyap');
+        this.router.navigate(['girisyap'], {state: {data: data.toString()}});
       });
   }
 

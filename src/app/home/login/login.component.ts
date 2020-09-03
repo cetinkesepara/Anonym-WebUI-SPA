@@ -24,8 +24,12 @@ export class LoginComponent implements OnInit {
   loginUserForm: FormGroup;
   loginUser:LoginUser;
   errors:string[] = [];
+  success:string = null;
 
   ngOnInit() {
+    if(history.state.data){
+      this.success = history.state.data;
+    }
     this.createLoginForm();
   }
 
