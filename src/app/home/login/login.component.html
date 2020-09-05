@@ -12,7 +12,7 @@
 
       <div *ngIf="errorMessages.length > 0">
         <div *ngFor="let error of errorMessages">
-          <div *ngIf="error.name == 'EmailConfirmation'; else defaultError" class="alert alert-{{error.type}}" role="alert">
+          <div *ngIf="error.name == 'UnverifiedEmail'; else defaultError" class="alert alert-{{error.type}}" role="alert">
             <p>{{error.value}}</p><br/><a routerLink="eposta-dogrulama" class="btn btn-primary btn-block btn-sm">Üyelik onayı için tıklayınız</a>
           </div>
           <ng-template #defaultError>

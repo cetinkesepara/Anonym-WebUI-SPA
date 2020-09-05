@@ -36,23 +36,7 @@ export class UserService {
         responseType: 'text',
       })
       .pipe(
-        catchError((err) => {
-          if (err.status == 401) {
-            this.errorMessages.push({
-              name: 'NotAuthentication',
-              type: 'warning',
-              value: err.error.toString(),
-            });
-          }
-          if (err.status == 400) {
-            this.errorMessages.push({
-              name: 'EmailConfirmation',
-              type: 'warning',
-              value: err.error.toString(),
-            });
-          }
-          return throwError(new Error('Bir hata oluştu!'));
-        })
+        catchError((err) => this.handleError(err))
       )
       .subscribe((data) => {
         let datas: any[] = JSON.parse(data);
@@ -81,17 +65,7 @@ export class UserService {
         responseType: 'text',
       })
       .pipe(
-        catchError((err) => {
-          if (err.status == 400) {
-            this.errorMessages.push({
-              name: 'RegisterError',
-              type: 'warning',
-              value: err.error.toString(),
-            });
-          }
-          return throwError(new Error('Bir hata oluştu!'));
-          //return throwError(err);
-        })
+        catchError((err) => this.handleError(err))
       )
       .subscribe((data) => {
         this.router.navigate(['girisyap'], {
@@ -112,17 +86,7 @@ export class UserService {
         responseType: 'text',
       })
       .pipe(
-        catchError((err) => {
-          if (err.status == 400) {
-            this.errorMessages.push({
-              name: 'EmailConfirmationError',
-              type: 'warning',
-              value: err.error.toString(),
-            });
-          }
-          return throwError(new Error('Bir hata oluştu!'));
-          //return throwError(err);
-        })
+        catchError((err) => this.handleError(err))
       );
   }
 
@@ -138,18 +102,19 @@ export class UserService {
         responseType: 'text',
       })
       .pipe(
-        catchError((err) => {
-          if (err.status == 400) {
-            this.errorMessages.push({
-              name: 'EmailActivateError',
-              type: 'warning',
-              value: err.error.toString(),
-            });
-          }
-          return throwError(new Error('Bir hata oluştu!'));
-          //return throwError(err);
-        })
+        catchError((err) => this.handleError(err))
       );
+  }
+
+  handleError(err){
+      if(err.status != 0){
+        this.errorMessages.push(JSON.parse(err.error));
+      }
+      else{
+        this.errorMessages.push(this.getSystemError());
+      }
+
+      return throwError(new Error('Bir hata oluştu!'));
   }
 
   getErrorMessages(): ErrorMessage[] {
@@ -181,5 +146,14 @@ export class UserService {
 
   getCurrentUserId() {
     return this.jwtHelper.decodeToken(this.token).nameid;
+  }
+
+  getSystemError():ErrorMessage{
+    let systemError = {
+      name: "SystemError",
+      type: "danger",
+      value: "Sistemsel bir hata oluştu lütfen yönetici ile iletişime geçiniz"
+    };
+    return systemError;
   }
 }
