@@ -9,12 +9,24 @@
         <a class="facebook"><fa-icon [icon]="faFacebook"></fa-icon>&nbsp;<span>Facebook</span></a>
         <a class="google"><fa-icon [icon]="faGoogle"></fa-icon>&nbsp;<span>Google</span></a>
       </div>
-      <div *ngIf="errors.length > 0" class="alert alert-warning" role="alert">
-        <p *ngFor="let error of errors">{{error}}</p>
+
+      <div *ngIf="errorMessages.length > 0">
+        <div *ngFor="let error of errorMessages">
+          <div *ngIf="error.name == 'EmailConfirmation'; else defaultError" class="alert alert-{{error.type}}" role="alert">
+            <p>{{error.value}}</p><br/><a routerLink="eposta-dogrulama" class="btn btn-primary btn-block btn-sm">Üyelik onayı için tıklayınız</a>
+          </div>
+          <ng-template #defaultError>
+            <div class="alert alert-{{error.type}}" role="alert">
+              <p>{{error.value}}</p>
+            </div>
+          </ng-template>
+        </div>
       </div>
+
       <div *ngIf="success" class="alert alert-success" role="alert">
         <p>{{success}}</p>
       </div>
+      
       <div class="form-group">
         <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Email adresiniz" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
         <span *ngIf="loginUserForm.get('email').hasError('required') && loginUserForm.get('email').touched" class="form-text text-muted">
@@ -40,7 +52,6 @@
       </div>
 
       <button type="submit" class="btn btn-md btn-primary btn-block">Oturumu Aç</button>
-   
     </form>
   </div>
 </div>

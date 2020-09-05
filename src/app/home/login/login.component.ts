@@ -4,6 +4,7 @@ import { LoginUser } from '../../models/loginUser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { ErrorMessage } from 'src/app/models/errorMessage';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +24,8 @@ export class LoginComponent implements OnInit {
   faGoogle = faGoogle;
   loginUserForm: FormGroup;
   loginUser:LoginUser;
-  errors:string[] = [];
   success:string = null;
+  errorMessages:ErrorMessage[] = [];
 
   ngOnInit() {
     if(history.state.data){
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     if(this.loginUserForm.valid){
       this.loginUser = Object.assign({}, this.loginUserForm.value);
       this.userService.login(this.loginUser);
-      this.errors = this.userService.getErrorMessages();
+      this.errorMessages = this.userService.getErrorMessages();
     }
   }
 

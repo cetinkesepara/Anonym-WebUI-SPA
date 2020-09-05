@@ -1,0 +1,32 @@
+<div class="main-login-bg">
+  <div class="main-login">
+    <form [formGroup]="emailConfirmationForm" (ngSubmit)="confirmEmail()">
+      <div class="form-group text-center">
+        <h3>E-Posta Doğrulama</h3>
+      </div>
+      <div class="form-group ec-text alert alert-info">
+        <p>Kayıt olurken e-posta hesabınıza bir doğrulama gönderilir. Eğer bu doğrulama iletisi size ulaşmadıysa veya süresi dolmuşsa tekrardan gönderebilirsiniz.</p>
+      </div>
+      <div *ngIf="errorMessages.length > 0">
+        <div *ngFor="let error of errorMessages">
+            <div class="alert alert-{{error.type}}" role="alert">
+              <p>{{error.value}}</p>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        <p>{{successMessage}}</p>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Email adresiniz" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+        <span *ngIf="emailConfirmationForm.get('email').hasError('required') && emailConfirmationForm.get('email').touched" class="form-text text-muted">
+          E-posta doğrulaması için e-posta adresinizi giriniz.
+        </span>
+        <span *ngIf="emailConfirmationForm.get('email').hasError('pattern') && emailConfirmationForm.get('email').dirty" class="form-text text-muted">
+          E-mail adresiniz example@examle.com formatında olmalıdır.
+        </span>
+      </div>
+      <button type="submit" class="btn btn-md btn-primary btn-block">E-Posta Doğrula</button>
+    </form>
+  </div>
+</div>

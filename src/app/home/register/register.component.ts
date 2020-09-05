@@ -4,6 +4,7 @@ import { UtilitiesService } from '../../services/utilities.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RegisterUser } from 'src/app/models/registerUser';
+import { ErrorMessage } from 'src/app/models/errorMessage';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
   cities:string[] = [];
   registerUserForm: FormGroup;
   registerUser: RegisterUser;
-  errors: string[] = [];
+  errorMessages:ErrorMessage[] = [];
 
   ngOnInit() {
     this.cities = this.utilitiesService.getCitiesOfTurkey();
@@ -59,7 +60,7 @@ export class RegisterComponent implements OnInit {
     if(this.registerUserForm.valid){
       this.registerUser = Object.assign({}, this.registerUserForm.value);
       this.userService.register(this.registerUser);
-      this.errors = this.userService.getErrorMessages();
+      this.errorMessages = this.userService.getErrorMessages();
     }
   }
 

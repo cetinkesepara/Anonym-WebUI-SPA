@@ -1,0 +1,16 @@
+<div class="main-login-bg">
+  <div class="main-login">
+    <div class="activatedMessage">
+      <div *ngIf="errorMessages.length > 0">
+        <div *ngFor="let error of errorMessages">
+            <div class="alert alert-{{error.type}}" role="alert">
+              <p>{{error.value}}</p>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="successMessage" class="alert alert-success" role="alert">
+        <p>{{successMessage}}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
-form {
+form{
     position: relative;
-    max-width: 900px;
+    max-width: 600px;
     background-color: #fff;
     padding: 30px;
     border-radius: 8px;
@@ -15,17 +15,15 @@ form {
         color:#565656;
     }
 
+    .ec-text {
+        p {
+            text-align: justify;
+        }
+    }
+
     .form-text {
         font-size: 14px;
         color:#b43737 !important;
     }
 
-    button {
-        background-color: #323747;
-        border:none;
-    }
-
-    button:hover {
-        background-color: #444B62;
-    }
 }
