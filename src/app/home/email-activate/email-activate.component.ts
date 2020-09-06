@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ErrorMessage } from 'src/app/models/errorMessage';
 
@@ -11,7 +11,11 @@ import { ErrorMessage } from 'src/app/models/errorMessage';
 })
 export class EmailActivateComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private userService:UserService) { }
+  constructor(private activatedRoute: ActivatedRoute, private userService:UserService, private router:Router) { 
+    if(this.isAuthenticated){
+      this.router.navigateByUrl('');
+    }
+  }
 
   errorMessages:ErrorMessage[] = [];
   successMessage:string = null;
@@ -26,4 +30,7 @@ export class EmailActivateComponent implements OnInit {
     this.errorMessages = this.userService.getErrorMessages();
   }
 
+  get isAuthenticated(){
+    return this.userService.loggedIn();
+  }
 }

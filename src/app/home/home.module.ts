@@ -13,6 +13,8 @@ import { MainComponent } from './main/main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 import { EmailActivateComponent } from './email-activate/email-activate.component';
+import { PasswordForgettenComponent } from './password-forgetten/password-forgetten.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { EmailActivateComponent } from './email-activate/email-activate.componen
     NotFoundComponent,
     EmailConfirmationComponent,
     EmailActivateComponent,
+    PasswordForgettenComponent,
+    PasswordResetComponent
   ],
   imports: [
     CommonModule,

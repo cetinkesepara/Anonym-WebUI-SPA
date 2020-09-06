@@ -106,6 +106,38 @@ export class UserService {
       );
   }
 
+  forgettingPassword(email: string){
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.httpClient
+      .post(this.path + 'forgettingPassword', {email:email}, {
+        headers: headers,
+        responseType: 'text',
+      })
+      .pipe(
+        catchError((err) => this.handleError(err))
+      );
+  }
+
+  resetPasswordForForgetten(userId: string, token: string, password: string){
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.httpClient
+      .post(this.path + 'resetPasswordForForgetten', {userId:userId, token:token, password:password}, {
+        headers: headers,
+        responseType: 'text',
+      })
+      .pipe(
+        catchError((err) => this.handleError(err))
+      );
+  }
+
   handleError(err){
       if(err.status != 0){
         this.errorMessages.push(JSON.parse(err.error));
