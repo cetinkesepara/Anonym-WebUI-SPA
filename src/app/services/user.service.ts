@@ -53,6 +53,35 @@ export class UserService {
       });
   }
 
+  loginWithSocial(user){
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+
+    this.httpClient
+    .post(this.path + 'loginWithSocial', user, {
+      headers: headers,
+      responseType: 'text',
+    })
+    .pipe(
+      catchError((err) => this.handleError(err))
+    )
+    .subscribe((data) => {
+      let datas: any[] = JSON.parse(data);
+      let token = JSON.stringify(datas['data']);
+      let message = datas['message'];
+
+      this.saveToken(token);
+      this.userToken = token;
+
+      this.decodedToken = this.jwtHelper.decodeToken(this.token);
+
+      this.router.navigateByUrl('');
+      this.alertifyService.success(message);
+    });
+  }
+
   register(registerUser: RegisterUser) {
     this.errorMessages = [];
 

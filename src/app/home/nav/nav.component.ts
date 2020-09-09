@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faUser, faHome, faPenAlt, faBell } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private userService:UserService, private router:Router) { }
+  constructor(private userService:UserService, private router:Router,private authService: SocialAuthService) { }
 
   faUser = faUser;
   faHome = faHome;
@@ -22,6 +23,7 @@ export class NavComponent implements OnInit {
   }
 
   logOut(){
+    this.authService.signOut();
     this.userService.logOut();
     this.router.navigateByUrl("girisyap");
   }

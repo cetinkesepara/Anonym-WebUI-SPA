@@ -6,8 +6,8 @@
         <h3>Giriş Yap</h3>
       </div>
       <div class="externalLogins">
-        <a class="facebook"><fa-icon [icon]="faFacebook"></fa-icon>&nbsp;<span>Facebook</span></a>
-        <a class="google"><fa-icon [icon]="faGoogle"></fa-icon>&nbsp;<span>Google</span></a>
+        <a class="facebook" (click)="loginWithFacebook()"><fa-icon [icon]="faFacebook"></fa-icon>&nbsp;<span>Facebook</span></a>
+        <a class="google" (click)="loginWithGoogle()"><fa-icon [icon]="faGoogle"></fa-icon>&nbsp;<span>Google</span></a>
       </div>
 
       <div *ngIf="errorMessages.length > 0">

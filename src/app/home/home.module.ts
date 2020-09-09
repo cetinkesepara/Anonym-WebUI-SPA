@@ -16,6 +16,9 @@ import { EmailActivateComponent } from './email-activate/email-activate.componen
 import { PasswordForgettenComponent } from './password-forgetten/password-forgetten.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -36,6 +39,25 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    SocialLoginModule
   ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider("3222450007802919")
+          },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider("1030545774119-kaoarn6c5c9kkf4s4v2qf3dn35f4ndrk.apps.googleusercontent.com")
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }
+  ]
 })
 export class HomeModule {}
