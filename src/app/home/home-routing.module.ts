@@ -9,6 +9,7 @@ import { EmailConfirmationComponent } from './email-confirmation/email-confirmat
 import { EmailActivateComponent } from './email-activate/email-activate.component';
 import { PasswordForgettenComponent } from './password-forgetten/password-forgetten.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {path: "", component:HomeComponent, children:[
@@ -19,6 +20,7 @@ const routes: Routes = [
     {path:"activateEmail/:userId/:token", component:EmailActivateComponent},
     {path:"girisyap/sifre-sifirlama", component: PasswordForgettenComponent},
     {path:"resetPassword/:userId/:token", component: PasswordResetComponent},
+    {path:"hesap", component:AccountComponent},
     {path: '**', component:NotFoundComponent}
   ] }
 ];

@@ -19,11 +19,11 @@
     </div>
   
     <div *ngIf="isAuthenticated" class="userProfile">
-      <a class="dropdown-toggle" href="#" id="navbarUserProfile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <fa-icon [icon]="faUser"></fa-icon> <span>Profil</span> 
+      <a class="dropdown-toggle active" id="navbarUserProfile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <fa-icon [icon]="faUser"></fa-icon> <span class="linkText">Profil</span> 
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarUserProfile">
-        <a class="dropdown-item">Hesap</a>
+        <a routerLink="hesap" routerLinkActive="active" class="dropdown-item">Hesap</a>
         <a class="dropdown-item">Ayarlar</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logOut()">Çıkış Yap</a>

@@ -1,0 +1,130 @@
+@import "~src/_vars";
+
+.a-text {
+  border: 1px solid;
+  border-radius: 7px;
+  @include template-border-color;
+  padding: 15px;
+
+  .a-text-header {
+    margin-bottom: 10px;
+    h3 {
+      @include template-general-font;
+      @include a-text-header-color;
+      border-bottom: 1px solid;
+      @include a-text-header-border-color;
+      padding-bottom: 10px;
+      font-size: 24px;
+    }
+  }
+
+  .a-text-info {
+    @include template-general-font;
+    @include a-text-info-color;
+
+    .faPenSquare {
+      @include a-text-input-icon-hover-color;
+    }
+    
+    .faWindowClose {
+      @include a-text-input-icon-close-color;
+    }
+  }
+
+  .form-row {
+    @include a-text-line-background-color;
+    @include template-general-font;
+    border-radius: 7px;
+    padding: 15px 15px;
+    margin-bottom: 10px;
+
+    label {
+      @include a-text-line-name-color;
+      font-weight: 500;
+    }
+
+    .a-content-edit {
+      position: relative;
+      fa-icon {
+        position: absolute;
+        right: 2px;
+        top: -10px;
+        font-size: 37.5px;
+        @include a-text-input-icon-color;
+        cursor: pointer;
+      }
+
+      fa-icon:hover {
+        @include a-text-input-icon-hover-color;
+      }
+
+      p {
+        @include a-text-input-background-color;
+        @include a-text-line-text-color;
+        @include template-border-color;
+        margin: 0;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="password"] {
+        @include a-text-input-background-color;
+        @include a-text-line-text-color;
+        @include template-border-color;
+        padding-right: 44px;
+      }
+
+      input[type="password"]::placeholder{
+        @include a-text-line-text-color;
+      }
+
+      select {
+        @include a-text-input-background-color;
+        @include a-text-line-text-color;
+        @include template-border-color;
+
+        -moz-appearance: none;
+        -webkit-appearance: none;
+
+        option {
+          @include a-text-line-text-color;
+        }
+      }
+    }
+
+    .edit-active {
+        fa-icon{
+            @include a-text-input-icon-close-color;
+        }
+
+        fa-icon:hover {
+            @include a-text-input-icon-close-hover-color;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            @include a-text-input-active-border-color;
+        }
+  
+        select {
+            @include a-text-input-active-border-color;
+        }
+    }
+  }
+
+  .form-button {
+    @include a-text-line-background-color;
+    @include template-general-font;
+    border-radius: 7px;
+    padding: 10px 15px;
+    margin-bottom: -5px;
+
+    button {
+        @include a-text-button-color;
+    }
+
+    button:hover {
+        @include a-text-button-hover-color;
+    }
+  }
+}

@@ -1,0 +1,247 @@
+$templete: "dark";
+$font: "default";
+
+//---------- Fonts -----------
+@mixin template-general-font {
+  @if ($font == "default") {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  @if ($font == "other") {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+
+//---------- Colors ----------
+@mixin template-background-color {
+  @if ($templete == "dark") {
+    background-color: #14161d !important;
+  }
+  @if ($templete == "light") {
+    background-color: red !important;
+  }
+}
+
+@mixin template-border-color {
+  @if ($templete == "dark") {
+    border-color: #1e2029 !important;
+  }
+  @if ($templete == "light") {
+    border-color: red !important;
+  }
+}
+
+@mixin nav-link-color {
+  @if ($templete == "dark") {
+    color: #9b9dab !important;
+  }
+  @if ($templete == "light") {
+    color: red !important;
+  }
+}
+
+@mixin nav-link-active-color {
+  @if ($templete == "dark") {
+    color: #fff !important;
+  }
+  @if ($templete == "light") {
+    color: red !important;
+  }
+}
+
+@mixin nav-link-icon-color {
+  @if ($templete == "dark") {
+    color: #9b9dab;
+  }
+  @if ($templete == "light") {
+    color: red;
+  }
+}
+
+@mixin nav-link-active-icon-color {
+  @if ($templete == "dark") {
+    color: #42e3d0 !important;
+  }
+  @if ($templete == "light") {
+    color: red !important;
+  }
+}
+
+@mixin mobile-collapse-button-border-color {
+  @if ($templete == "dark") {
+    border-color: #42e3d0 !important;
+  }
+  @if ($templete == "light") {
+    border-color: red !important;
+  }
+}
+
+@mixin general-form-background-color {
+  @if ($templete == "dark") {
+    background-color: #fff;
+  }
+  @if ($templete == "light") {
+    background-color: #fff;
+  }
+}
+
+@mixin general-form-header-color {
+  @if ($templete == "dark") {
+    color: #565656;
+  }
+  @if ($templete == "light") {
+    color: #565656;
+  }
+}
+
+@mixin general-form-small-error-color {
+  @if ($templete == "dark") {
+    color: #b43737 !important;
+  }
+  @if ($templete == "light") {
+    color: #b43737 !important;
+  }
+}
+
+@mixin general-form-button-background-color {
+  @if ($templete == "dark") {
+    background-color: #323747 !important;
+  }
+  @if ($templete == "light") {
+    background-color: #323747 !important;
+  }
+}
+
+@mixin general-form-button-hover-background-color {
+  @if ($templete == "dark") {
+    background-color: #444b62 !important;
+  }
+  @if ($templete == "light") {
+    background-color: #444b62 !important;
+  }
+}
+
+@mixin a-text-line-background-color {
+  @if ($templete == "dark") {
+    background-color: #1E2028 !important;
+  }
+  @if ($templete == "light") {
+    background-color: #1E2028 !important;
+  }
+}
+
+@mixin a-text-line-name-color {
+  @if ($templete == "dark") {
+    color: #42e3d0 !important;
+  }
+  @if ($templete == "light") {
+    color: #42e3d0 !important;
+  }
+}
+
+@mixin a-text-line-text-color {
+  @if ($templete == "dark") {
+    color: #fff !important;
+  }
+  @if ($templete == "light") {
+    color: #fff !important;
+  }
+}
+
+@mixin a-text-header-color {
+  @if ($templete == "dark") {
+    color: #fff !important;
+  }
+  @if ($templete == "light") {
+    color: #fff !important;
+  }
+}
+
+@mixin a-text-header-border-color {
+  @if ($templete == "dark") {
+    border-color: #42e3d0 !important;
+  }
+  @if ($templete == "light") {
+    border-color: #42e3d0 !important;
+  }
+}
+
+@mixin a-text-info-color {
+  @if ($templete == "dark") {
+    color: #9b9dab !important;
+  }
+  @if ($templete == "light") {
+    color: #9b9dab !important;
+  }
+}
+
+@mixin a-text-input-background-color {
+  @if ($templete == "dark") {
+    background-color: #40475B !important;
+  }
+  @if ($templete == "light") {
+    background-color: #40475B !important;
+  }
+}
+
+@mixin a-text-input-icon-color {
+  @if ($templete == "dark") {
+    color: #9b9dab !important;
+  }
+  @if ($templete == "light") {
+    color: #9b9dab !important;
+  }
+}
+
+@mixin a-text-input-icon-hover-color {
+  @if ($templete == "dark") {
+    color: #42e3d0 !important;
+  }
+  @if ($templete == "light") {
+    color: #42e3d0 !important;
+  }
+}
+
+@mixin a-text-input-active-border-color {
+  @if ($templete == "dark") {
+    border-color: #fff !important;
+  }
+  @if ($templete == "light") {
+    border-color: #fff !important;
+  }
+}
+
+@mixin a-text-input-icon-close-color {
+  @if ($templete == "dark") {
+    color: #FA6561 !important;
+  }
+  @if ($templete == "light") {
+    color: #FA6561 !important;
+  }
+}
+
+@mixin a-text-input-icon-close-hover-color {
+  @if ($templete == "dark") {
+    color: #F94A46 !important;
+  }
+  @if ($templete == "light") {
+    color: #F94A46 !important;
+  }
+}
+
+@mixin a-text-button-color {
+  @if ($templete == "dark") {
+    color: #fff !important;
+  }
+  @if ($templete == "light") {
+    color: #fff !important;
+  }
+}
+
+@mixin a-text-button-hover-color {
+  @if ($templete == "dark") {
+    color: #42e3d0 !important;
+  }
+  @if ($templete == "light") {
+    color: #42e3d0 !important;
+  }
+}

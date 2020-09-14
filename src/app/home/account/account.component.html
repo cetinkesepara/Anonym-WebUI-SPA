@@ -1,0 +1,228 @@
+<div class="main-standard-bg">
+    <div class="container pt-5">
+   
+        <div *ngIf="errorMessages.length > 0" class="row">
+            <div *ngFor="let error of errorMessages" class="col-12">
+                <div *ngIf="error.name != 'UsernameExistError'" class="alert alert-{{error.type}}" role="alert">
+                    <p>{{error.value}}</p>
+                </div>
+            </div>
+        </div>
+     
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="a-text">
+                    <form [formGroup]="infoUserForm" (ngSubmit)="updateUserInfo()">
+                        <div class="a-text-header text-center">
+                            <h3>Bilgilerim</h3>
+                        </div>
+                        <div class="a-text-info text-justify">
+                            <p>
+                                Kişisel bilgilerinizi düzenleyebilirsiniz. Düzenlemek
+                                istediğiniz alanları seçerek (
+                                <fa-icon class="faPenSquare" [icon]="faPenSquare"></fa-icon> ) güncelleme işlemini
+                                yapabilirsiniz. Seçimi iptal etmek için 
+                                <fa-icon class="faWindowClose" [icon]="faWindowClose"></fa-icon> ikonuna tıklayınız
+                            </p>
+                        </div>
+                        <div class="form-row">
+                            <label for="name" class="col-sm-2 col-form-label">İsim:</label>
+                            <div class="col-sm-10">
+                                <div class="a-content-edit" [ngClass]="{ 'edit-active': formNameEdit }">
+                                    <fa-icon (click)="editFormValue('name')" [icon]="editFormIcon('name')"></fa-icon>
+                                    <input class="form-control" type="text" id="name" name="name"
+                                        formControlName="name" value="{{accountUser.name}}" />
+                                    <span *ngIf="
+                      infoUserForm.get('name').hasError('required') &&
+                      infoUserForm.get('name').touched
+                    " class="form-text text-muted">
+                                        Güncelleme için isim gereklidir
+                                    </span>
+                                    <span *ngIf="
+                      infoUserForm.get('name').hasError('minlength') &&
+                      infoUserForm.get('name').dirty
+                    " class="form-text text-muted">
+                                        İsminiz en az 3 karakterli olmalıdır
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="city" class="col-sm-2 col-form-label">Şehir:</label>
+                            <div class="col-sm-10">
+                                <div class="a-content-edit" [ngClass]="{ 'edit-active': formCityEdit }">
+                                    <fa-icon (click)="editFormValue('city')" [icon]="editFormIcon('city')"></fa-icon>
+                                    <select id="city" name="city" class="form-control" formControlName="city">
+                                        <option selected hidden>{{accountUser.city}}</option>
+                                        <option *ngFor="let city of cities" [ngValue]="city">
+                                            {{ city }}
+                                        </option>
+                                    </select>
+                                    <span *ngIf="
+                      infoUserForm.get('city').hasError('required') &&
+                      infoUserForm.get('city').touched
+                    " class="form-text text-muted">
+                                        Güncelle için bir şehir seçiniz
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="gender" class="col-sm-2 col-form-label">Cinsiyet:</label>
+                            <div class="col-sm-10">
+                                <div class="a-content-edit" [ngClass]="{ 'edit-active': formGenderEdit }">
+                                    <fa-icon (click)="editFormValue('gender')" [icon]="editFormIcon('gender')">
+                                    </fa-icon>
+                                    <select id="gender" name="gender" class="form-control" formControlName="gender">
+                                        <option selected hidden>{{accountUser.gender}}</option>
+                                        <option>Erkek</option>
+                                        <option>Kadın</option>
+                                    </select>
+                                    <span *ngIf="
+                      infoUserForm.get('gender').hasError('required') &&
+                      infoUserForm.get('gender').touched
+                    " class="form-text text-muted">
+                                        Güncelleme için cinsiyetinizi seçiniz
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="birthDay" class="col-sm-2 col-form-label">Doğum Tarihi:</label>
+                            <div class="col-sm-10">
+                                <div class="a-content-edit" [ngClass]="{ 'edit-active': formBirthEdit }">
+                                    <fa-icon (click)="editFormValue('birthDay')" [icon]="editFormIcon('birthDay')">
+                                    </fa-icon>
+                                    <input type="date" id="birthDay" name="birthDay" class="form-control"
+                                        formControlName="birthDay" value="{{accountUser.birthDay | date:'yyyy-MM-dd'}}" />
+                                    <span *ngIf="
+                      infoUserForm.get('birthDay').hasError('required') &&
+                      infoUserForm.get('birthDay').touched
+                    " class="form-text text-muted">
+                                        Güncelleme için doğum günü tarihini giriniz
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-button form-row">
+                            <button [disabled]="!this.infoUserForm.get('name').valid && !this.infoUserForm.get('city').valid && !this.infoUserForm.get('gender').valid && !this.infoUserForm.get('birthDay').valid" type="submit" class="btn btn-block">
+                                Güncelle
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-lg-0 mt-5 mb-lg-0 mb-5">
+                <div class="a-text">
+                    <div class="a-text-header text-center">
+                        <h3>Hesabım</h3>
+                    </div>
+                    <div class="a-text-info text-justify">
+                        <p>
+                            Kullanıcı adınızı düzenleyerek kullanıcı adı ile giriş yapabilirsiniz. Şifrenizi yenilemek için yeni
+                            şifrenizi giriniz. 
+                        </p>
+                    </div>
+                    <div class="form-row">
+                        <label for="email" class="col-sm-2 col-form-label">E-Posta:</label>
+                        <div class="col-sm-10">
+                            <div class="a-content-edit">
+                                <p id="email" class="form-control">{{accountUser.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form [formGroup]="usernameUserForm" (ngSubmit)="updateUsername()">
+                        <div *ngIf="errorMessages.length > 0 ">
+                            <div *ngFor="let error of errorMessages">
+                                <div *ngIf="error.name == 'UsernameExistError'" class="alert alert-{{error.type}}" role="alert">
+                                    <p>{{error.value}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="userName" class="col-sm-2 col-form-label">Kullanıcı Adı:</label>
+                            <div class="col-sm-10">
+                                <div class="a-content-edit" [ngClass]="{ 'edit-active': formUserNameEdit }">
+                                    <fa-icon (click)="editFormValue('userName')" [icon]="editFormIcon('userName')">
+                                    </fa-icon>
+                                    <input class="form-control" type="text" id="userName" name="userName"
+                                        formControlName="userName" value="{{accountUser.userName}}" pattern="^[a-zA-Z0-9]*$"/>
+                                    <span *ngIf="
+                      usernameUserForm.get('userName').hasError('required') &&
+                      usernameUserForm.get('userName').touched
+                    " class="form-text text-muted">
+                                        Kullanıcı adı gereklidir
+                                    </span>
+                                    <span *ngIf="
+                      usernameUserForm.get('userName').hasError('minlength') &&
+                      usernameUserForm.get('userName').dirty
+                    " class="form-text text-muted">
+                                        Kullanıcı adı en az 6 karakterli olmalıdır
+                                    </span>
+                                    <span *ngIf="
+                      usernameUserForm.get('userName').hasError('maxlength') &&
+                      usernameUserForm.get('userName').dirty
+                    " class="form-text text-muted">
+                                        Kullanıcı adı en fazla 20 karakterli olmalıdır
+                                    </span>
+                                    <span *ngIf="
+                                    usernameUserForm.get('userName').hasError('pattern') &&
+                                    usernameUserForm.get('userName').dirty
+                                  " class="form-text text-muted">
+                                                      Kullanıcı adı sadece ingilizce karakterler ve rakamlardan oluşabilir
+                                                  </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-button form-row" style="margin-bottom: 10px">
+                            <button [disabled]="!usernameUserForm.valid" type="submit" class="btn btn-block">
+                                Kullanıcı Adını Değiştir
+                            </button>
+                        </div>
+                    </form>
+
+                    <form [formGroup]="passwordUserForm" (ngSubmit)="updatePassword()">
+                        <div class="form-row">
+                            <label for="password" class="col-sm-2 col-form-label">Şifre:</label>
+                            <div class="col-sm-10">
+                                <div class="a-content-edit" [ngClass]="{ 'edit-active': formPasswordEdit }">
+                                    <fa-icon (click)="editFormValue('password')" [icon]="editFormIcon('password')">
+                                    </fa-icon>
+                                    <input class="form-control" type="password" id="password" name="password"
+                                        placeholder="Yeni şifreniz" formControlName="password"
+                                        pattern="(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}" />
+                                    <span *ngIf="
+                      passwordUserForm.get('password').hasError('required') &&
+                      passwordUserForm.get('password').touched
+                    " class="form-text text-muted">
+                                        Şifreyi değiştirmek için yeni şifre giriniz
+                                    </span>
+                                    <span *ngIf="
+                      passwordUserForm.get('password').hasError('pattern') &&
+                      passwordUserForm.get('password').dirty
+                    " class="form-text text-muted">
+                                        Şifrenizde: <br />
+                                        * En az bir büyük harf (A-Z) <br />
+                                        * En az bir küçük harf (a-z) <br />
+                                        * En az bir rakam (0-9) <br />
+                                        * En az bir özel karakter (#?!@$%^&*-.) <br />
+                                        * En az 8 karakter (Examle123+)'den oluşmalıdır <br />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-button form-row">
+                            <button [disabled]="!passwordUserForm.valid" type="submit" class="btn btn-block">
+                                Şifreyi Değiştir
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

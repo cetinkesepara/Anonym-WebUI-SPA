@@ -8,13 +8,17 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { AlertifyService } from './alertify.service';
+import { AccountUser } from '../models/accountUser';
+import { InfoUser } from '../models/infoUser';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private httpClient: HttpClient,
     private router: Router,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private utilitiesService: UtilitiesService
   ) {}
 
   TOKEN_KEY = 'token';
@@ -23,6 +27,83 @@ export class UserService {
   decodedToken: any;
   jwtHelper: JwtHelper = new JwtHelper();
   errorMessages: ErrorMessage[] = [];
+
+  getUserAccount(): Observable<AccountUser> {
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.token,
+    });
+
+    return this.httpClient
+      .get<AccountUser>(this.path + 'getAccountUser', {
+        headers: headers,
+      })
+      .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  updatePassword(password: string) {
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.token,
+    });
+
+    this.httpClient
+      .post(
+        this.path + 'updatePassword',
+        { password: password },
+        { headers: headers, responseType: 'text' }
+      )
+      .pipe(catchError((err) => this.handleError(err)))
+      .subscribe((data)=>{
+        this.alertifyService.success(data);
+        this.utilitiesService.reloadPage('hesap');
+      });
+  }
+
+  updateUsername(username: string) {
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.token,
+    });
+
+    this.httpClient
+      .post(
+        this.path + 'updateUsername',
+        { userName: username },
+        { headers: headers, responseType: 'text' }
+      )
+      .pipe(catchError((err) => this.handleError(err)))
+      .subscribe((data) => {
+        this.alertifyService.success(data);
+        this.utilitiesService.reloadPage('hesap');
+      });
+  }
+
+  updateUserInformation(userInfo: InfoUser) {
+    this.errorMessages = [];
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.token,
+    });
+
+    this.httpClient
+      .post(this.path + 'updateUserInformation', userInfo, {
+        headers: headers,
+        responseType: 'text',
+      })
+      .pipe(catchError((err) => this.handleError(err)))
+      .subscribe((data) => {
+        this.alertifyService.success(data);
+        this.utilitiesService.reloadPage('hesap');
+      });
+  }
 
   login(loginUser: LoginUser) {
     this.errorMessages = [];
@@ -35,9 +116,7 @@ export class UserService {
         headers: headers,
         responseType: 'text',
       })
-      .pipe(
-        catchError((err) => this.handleError(err))
-      )
+      .pipe(catchError((err) => this.handleError(err)))
       .subscribe((data) => {
         let datas: any[] = JSON.parse(data);
         let token = JSON.stringify(datas['data']);
@@ -53,33 +132,31 @@ export class UserService {
       });
   }
 
-  loginWithSocial(user){
+  loginWithSocial(user) {
     this.errorMessages = [];
 
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
 
     this.httpClient
-    .post(this.path + 'loginWithSocial', user, {
-      headers: headers,
-      responseType: 'text',
-    })
-    .pipe(
-      catchError((err) => this.handleError(err))
-    )
-    .subscribe((data) => {
-      let datas: any[] = JSON.parse(data);
-      let token = JSON.stringify(datas['data']);
-      let message = datas['message'];
+      .post(this.path + 'loginWithSocial', user, {
+        headers: headers,
+        responseType: 'text',
+      })
+      .pipe(catchError((err) => this.handleError(err)))
+      .subscribe((data) => {
+        let datas: any[] = JSON.parse(data);
+        let token = JSON.stringify(datas['data']);
+        let message = datas['message'];
 
-      this.saveToken(token);
-      this.userToken = token;
+        this.saveToken(token);
+        this.userToken = token;
 
-      this.decodedToken = this.jwtHelper.decodeToken(this.token);
+        this.decodedToken = this.jwtHelper.decodeToken(this.token);
 
-      this.router.navigateByUrl('');
-      this.alertifyService.success(message);
-    });
+        this.router.navigateByUrl('');
+        this.alertifyService.success(message);
+      });
   }
 
   register(registerUser: RegisterUser) {
@@ -93,9 +170,7 @@ export class UserService {
         headers: headers,
         responseType: 'text',
       })
-      .pipe(
-        catchError((err) => this.handleError(err))
-      )
+      .pipe(catchError((err) => this.handleError(err)))
       .subscribe((data) => {
         this.router.navigate(['girisyap'], {
           state: { data: data.toString() },
@@ -110,72 +185,79 @@ export class UserService {
     headers = headers.append('Content-Type', 'application/json');
 
     return this.httpClient
-      .post(this.path + 'confrimEmail', {email:email}, {
-        headers: headers,
-        responseType: 'text',
-      })
-      .pipe(
-        catchError((err) => this.handleError(err))
-      );
+      .post(
+        this.path + 'confrimEmail',
+        { email: email },
+        {
+          headers: headers,
+          responseType: 'text',
+        }
+      )
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
-  activateEmail(userId: string, token:string): Observable<string>{
+  activateEmail(userId: string, token: string): Observable<string> {
     this.errorMessages = [];
 
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
 
     return this.httpClient
-      .post(this.path + 'activatedEmail', {userId:userId, token:token}, {
-        headers: headers,
-        responseType: 'text',
-      })
-      .pipe(
-        catchError((err) => this.handleError(err))
-      );
+      .post(
+        this.path + 'activatedEmail',
+        { userId: userId, token: token },
+        {
+          headers: headers,
+          responseType: 'text',
+        }
+      )
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
-  forgettingPassword(email: string){
+  forgettingPassword(email: string) {
     this.errorMessages = [];
 
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
 
     return this.httpClient
-      .post(this.path + 'forgettingPassword', {email:email}, {
-        headers: headers,
-        responseType: 'text',
-      })
-      .pipe(
-        catchError((err) => this.handleError(err))
-      );
+      .post(
+        this.path + 'forgettingPassword',
+        { email: email },
+        {
+          headers: headers,
+          responseType: 'text',
+        }
+      )
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
-  resetPasswordForForgetten(userId: string, token: string, password: string){
+  resetPasswordForForgetten(userId: string, token: string, password: string) {
     this.errorMessages = [];
 
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
 
     return this.httpClient
-      .post(this.path + 'resetPasswordForForgetten', {userId:userId, token:token, password:password}, {
-        headers: headers,
-        responseType: 'text',
-      })
-      .pipe(
-        catchError((err) => this.handleError(err))
-      );
+      .post(
+        this.path + 'resetPasswordForForgetten',
+        { userId: userId, token: token, password: password },
+        {
+          headers: headers,
+          responseType: 'text',
+        }
+      )
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
-  handleError(err){
-      if(err.status != 0){
-        this.errorMessages.push(JSON.parse(err.error));
-      }
-      else{
-        this.errorMessages.push(this.getSystemError());
-      }
+  handleError(err) {
+    if (err.status != 0) {
+      this.errorMessages.push(JSON.parse(err.error));
+    } else {
+      this.errorMessages.push(this.getSystemError());
+    }
 
-      return throwError(new Error('Bir hata oluştu!'));
+    return throwError(new Error('Bir hata oluştu!'));
   }
 
   getErrorMessages(): ErrorMessage[] {
@@ -209,11 +291,11 @@ export class UserService {
     return this.jwtHelper.decodeToken(this.token).nameid;
   }
 
-  getSystemError():ErrorMessage{
+  getSystemError(): ErrorMessage {
     let systemError = {
-      name: "SystemError",
-      type: "danger",
-      value: "Sistemsel bir hata oluştu lütfen yönetici ile iletişime geçiniz"
+      name: 'SystemError',
+      type: 'danger',
+      value: 'Sistemsel bir hata oluştu lütfen yönetici ile iletişime geçiniz',
     };
     return systemError;
   }

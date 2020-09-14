@@ -1,12 +1,16 @@
+@import '~src/_vars';
+
 nav {
-    background-color: #14161d !important;
+    @include template-background-color;
+    border-bottom:1px solid;
+    @include template-border-color ;
 
     .navbar-brand{
         color: #fff;
     }
 
     button{
-        border-color: rgba(66,227,208, 1);
+        @include mobile-collapse-button-border-color;
         .navbar-toggler-icon{
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(66,227,208, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
         }
@@ -16,8 +20,12 @@ nav {
         .navbar-nav{
             .nav-item{
                 .nav-link{
-                    color: #9b9dab;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    @include nav-link-color;
+                    @include template-general-font;
+
+                    fa-icon{
+                        @include nav-link-icon-color;
+                    }
 
                     .notificationCount {
                         border-radius: 10px;
@@ -27,18 +35,18 @@ nav {
                 }
 
                 .nav-link:hover{
-                    color: #fff;
+                    @include nav-link-active-color;
                     fa-icon{
-                        color:#42e3d0;
+                        @include nav-link-active-icon-color;
                     }
                 }
             }
             .active{
                 fa-icon{
-                    color:#42e3d0;
+                    @include nav-link-active-icon-color;
                 }
                 .linkText{
-                    color:#fff;
+                    @include nav-link-active-color;
                 }
             }
         }
@@ -50,7 +58,7 @@ nav {
         top: 15px;
         .dropdown-toggle{
             text-decoration:none;
-            color: #9b9dab;
+            @include nav-link-active-icon-color;
             cursor: pointer;
             
             span{
@@ -59,15 +67,24 @@ nav {
         }
 
         .dropdown-toggle:hover{
-            color:#fff;
+            @include nav-link-active-color;
             fa-icon{
-                color:#42e3d0;
+                @include nav-link-active-icon-color;
             }
         }
 
         .dropdown-menu {
             a {
                 cursor: pointer;
+            }
+        }
+
+        .active{
+            fa-icon{
+                @include nav-link-active-icon-color;
+            }
+            .linkText{
+                @include nav-link-active-color;
             }
         }
     }
@@ -78,17 +95,17 @@ nav {
         right: 20px;
         top: 15px;
         a {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            @include template-general-font;
             text-decoration:none;
-            color: #9b9dab;
+            @include nav-link-color;
         }
 
         a:hover{
-           color:#fff;
+            @include nav-link-active-color;
         }
 
         .active{
-            color:#fff;
+            @include nav-link-active-color;
         }
     }
 }
